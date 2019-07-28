@@ -60,7 +60,7 @@ public abstract class Classifier {
   /** Dimensions of inputs. */
   private static final int DIM_BATCH_SIZE = 1;
 
-  private static final int DIM_PIXEL_SIZE = 3;
+  private static final int DIM_PIXEL_SIZE = 1; // TODO: Change for gray-scale or RGB channels
 
   /** Preallocated buffers for storing image data in. */
   private final int[] intValues = new int[getImageSizeX() * getImageSizeY()];

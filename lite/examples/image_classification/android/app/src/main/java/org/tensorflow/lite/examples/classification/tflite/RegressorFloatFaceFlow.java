@@ -50,9 +50,12 @@ public class RegressorFloatFaceFlow extends Classifier {
 
     @Override
     protected void addPixelValue(int pixelValue) {
-        imgData.putFloat((pixelValue >> 16 & 0xFF) / IMAGE_MAX);
-        imgData.putFloat((pixelValue >> 8 & 0xFF) / IMAGE_MAX);
-        imgData.putFloat((pixelValue & 0xFF) / IMAGE_MAX);
+        // see the formula for gray-scale at https://stackoverflow.com/a/19181932/2593810(
+        int red = pixelValue >> 16 & 0xFF; // from 0 to 255
+        int green = pixelValue >> 8 & 0xFF; // from 0 to 255
+        int blue = pixelValue & 0xFF; // from 0 to 255
+        float gray = 0.299f * red + 0.587f * green + 0.114f * blue; // approx average from 0 to 255
+        imgData.putFloat(gray / IMAGE_MAX);
     }
 
     @Override
