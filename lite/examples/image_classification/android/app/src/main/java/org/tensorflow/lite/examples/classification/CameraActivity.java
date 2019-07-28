@@ -39,6 +39,8 @@ import androidx.annotation.UiThread;
 import com.google.android.material.bottomsheet.BottomSheetBehavior;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+
+import android.util.Log;
 import android.util.Size;
 import android.view.Surface;
 import android.view.View;
@@ -51,6 +53,7 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 import java.nio.ByteBuffer;
+import java.util.Arrays;
 import java.util.List;
 import org.tensorflow.lite.examples.classification.env.ImageUtils;
 import org.tensorflow.lite.examples.classification.env.Logger;
@@ -422,12 +425,27 @@ public abstract class CameraActivity extends AppCompatActivity
   private String chooseCamera() {
     final CameraManager manager = (CameraManager) getSystemService(Context.CAMERA_SERVICE);
     try {
-      for (final String cameraId : manager.getCameraIdList()) {
+      String[] cameraIdList = manager.getCameraIdList();
+      LOGGER.d("Camera ID List: %s", Arrays.toString(cameraIdList));
+      for (final String cameraId : cameraIdList) {
         final CameraCharacteristics characteristics = manager.getCameraCharacteristics(cameraId);
 
         // We don't use a front facing camera in this sample.
         final Integer facing = characteristics.get(CameraCharacteristics.LENS_FACING);
-        if (facing != null && facing == CameraCharacteristics.LENS_FACING_FRONT) {
+        String facingStr = null;
+        switch(facing) {
+          case CameraCharacteristics.LENS_FACING_FRONT:
+            facingStr = "front";
+            break;
+          case CameraCharacteristics.LENS_FACING_BACK:
+            facingStr = "back";
+            break;
+          case CameraCharacteristics.LENS_FACING_EXTERNAL:
+            facingStr = "external";
+            break;
+        }
+        LOGGER.d("Camera %s: Facing=%s", cameraId, facingStr);
+        if (facing != null && facing == CameraCharacteristics.LENS_FACING_BACK) {
           continue;
         }
 
@@ -441,11 +459,12 @@ public abstract class CameraActivity extends AppCompatActivity
         // Fallback to camera1 API for internal cameras that don't have full support.
         // This should help with legacy situations where using the camera2 API causes
         // distorted or otherwise broken previews.
-        useCamera2API =
-            (facing == CameraCharacteristics.LENS_FACING_EXTERNAL)
-                || isHardwareLevelSupported(
-                    characteristics, CameraCharacteristics.INFO_SUPPORTED_HARDWARE_LEVEL_FULL);
-        LOGGER.i("Camera API lv2?: %s", useCamera2API);
+          useCamera2API = true;
+//        useCamera2API =
+//            (facing == CameraCharacteristics.LENS_FACING_EXTERNAL)
+//                || isHardwareLevelSupported(
+//                    characteristics, CameraCharacteristics.INFO_SUPPORTED_HARDWARE_LEVEL_FULL);
+        LOGGER.i("Camera API v1 or v2?: %s", useCamera2API ? "v2" : "v1");
         return cameraId;
       }
     } catch (CameraAccessException e) {
@@ -553,7 +572,7 @@ public abstract class CameraActivity extends AppCompatActivity
     cropValueTextView.setText(cropInfo);
   }
 
-  protected void showCameraResolution(String cameraInfo) {
+  protected void showCameraResolution() {
     cameraResolutionTextView.setText(previewWidth + "x" + previewHeight);
   }
 

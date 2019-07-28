@@ -23,6 +23,7 @@ import android.graphics.Matrix;
 import android.graphics.Typeface;
 import android.media.ImageReader.OnImageAvailableListener;
 import android.os.SystemClock;
+import android.util.Log;
 import android.util.Size;
 import android.util.TypedValue;
 import android.widget.Toast;
@@ -102,7 +103,11 @@ public class ClassifierActivity extends CameraActivity implements OnImageAvailab
   @Override
   protected void processImage() {
     rgbFrameBitmap.setPixels(getRgbBytes(), 0, previewWidth, 0, 0, previewWidth, previewHeight);
+//    LOGGER.d("rgbFrameBitmap Width=%d Height=%d", rgbFrameBitmap.getWidth(), rgbFrameBitmap.getHeight());
     final Canvas canvas = new Canvas(croppedBitmap);
+//    LOGGER.d("canvas width=%d, height=%d, maxwidth=%d, maxheight=%d", canvas.getWidth(), canvas.getHeight(), canvas.getMaximumBitmapWidth(), canvas.getMaximumBitmapHeight());
+//    LOGGER.d("croppedBitMap width=%d, height=%d", croppedBitmap.getWidth(), croppedBitmap.getHeight());
+
     canvas.drawBitmap(rgbFrameBitmap, frameToCropTransform, null);
 
     runInBackground(
@@ -123,7 +128,7 @@ public class ClassifierActivity extends CameraActivity implements OnImageAvailab
                       showResultsInBottomSheet(results);
                       showFrameInfo(previewWidth + "x" + previewHeight);
                       showCropInfo(cropCopyBitmap.getWidth() + "x" + cropCopyBitmap.getHeight());
-                      showCameraResolution(canvas.getWidth() + "x" + canvas.getHeight());
+                      showCameraResolution();
                       showRotationInfo(String.valueOf(sensorOrientation));
                       showInference(lastProcessingTimeMs + "ms");
                     }
