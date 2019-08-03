@@ -280,9 +280,10 @@ public abstract class Classifier {
               null));
     }
     final ArrayList<Recognition> recognitions = new ArrayList<Recognition>();
-    recognitions.add(new Recognition(""+19, labels.get(19), getNormalizedProbability(19), null));
-    recognitions.add(new Recognition(""+31, labels.get(31), getNormalizedProbability(31), null));
-    recognitions.add(new Recognition(""+39, labels.get(39), getNormalizedProbability(39), null));
+    int[] indices = {6, 47, 19};
+    for (int i : indices) {
+      recognitions.add(new Recognition(""+i, labels.get(i), getNormalizedProbability(i), null));
+    }
 //    int recognitionsSize = Math.min(pq.size(), MAX_RESULTS);
 //    for (int i = 0; i < recognitionsSize; ++i) {
 //      recognitions.add(pq.poll());
