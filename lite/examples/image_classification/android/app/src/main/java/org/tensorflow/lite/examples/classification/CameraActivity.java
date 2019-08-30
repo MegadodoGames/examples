@@ -433,19 +433,22 @@ public abstract class CameraActivity extends AppCompatActivity
         // We don't use a front facing camera in this sample.
         final Integer facing = characteristics.get(CameraCharacteristics.LENS_FACING);
         String facingStr = null;
-        switch(facing) {
-          case CameraCharacteristics.LENS_FACING_FRONT:
-            facingStr = "front";
-            break;
-          case CameraCharacteristics.LENS_FACING_BACK:
-            facingStr = "back";
-            break;
-          case CameraCharacteristics.LENS_FACING_EXTERNAL:
-            facingStr = "external";
-            break;
+        if (facing != null) {
+          switch (facing) {
+            case CameraCharacteristics.LENS_FACING_FRONT:
+              facingStr = "front";
+              break;
+            case CameraCharacteristics.LENS_FACING_BACK:
+              facingStr = "back";
+              break;
+            case CameraCharacteristics.LENS_FACING_EXTERNAL:
+              facingStr = "external";
+              break;
+          }
         }
         LOGGER.d("Camera %s: Facing=%s", cameraId, facingStr);
-        if (facing != null && facing == CameraCharacteristics.LENS_FACING_BACK) {
+        // only use front camera
+        if (facing == null || facing != CameraCharacteristics.LENS_FACING_FRONT) {
           continue;
         }
 
@@ -476,6 +479,7 @@ public abstract class CameraActivity extends AppCompatActivity
 
   protected void setFragment() {
     String cameraId = chooseCamera();
+    LOGGER.d("Chosen Camera ID: %s", cameraId);
 
     Fragment fragment;
     if (useCamera2API) {
