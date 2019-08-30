@@ -27,7 +27,7 @@ public class RegressorFloatFaceFlow extends Classifier {
 
     @Override
     public int getImageSizeY() {
-        return 80;
+        return 60;
     }
 
     @Override
@@ -35,7 +35,7 @@ public class RegressorFloatFaceFlow extends Classifier {
         // you can download this file from
         // see build.gradle for where to obtain this file. It should be auto
         // downloaded into assets.
-        return "model_adapted.tflite";
+        return "model.tflite";
     }
 
     @Override
