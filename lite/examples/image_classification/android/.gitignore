@@ -1,3 +1,4 @@
+libuvccamera/src/main/libs/
 *.iml
 .gradle
 /local.properties
