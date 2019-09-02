@@ -220,10 +220,10 @@ public abstract class UVCCameraActivity extends AppCompatActivity
             LOGGER.w("Dropping frame!");
             return;
         }
-        
-        int scaledWidth = 80;
-        int scaledHeight = 60;
-        bitmap = bitmap.createScaledBitmap(bitmap, scaledWidth, scaledHeight, false);
+
+//        int scaledWidth = 80;
+//        int scaledHeight = 60;
+//        bitmap = bitmap.createScaledBitmap(bitmap, scaledWidth, scaledHeight, false);
         
         
         rgbBitmap = bitmap;
