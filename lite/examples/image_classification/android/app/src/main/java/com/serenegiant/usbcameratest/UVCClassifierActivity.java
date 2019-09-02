@@ -115,6 +115,7 @@ public class UVCClassifierActivity extends UVCCameraActivity implements OnImageA
                     public void run() {
                         if (classifier!=null) {
                             final long startTime = SystemClock.uptimeMillis();
+//                            LOGGER.d("croppedBitMap width=%d, height=%d", croppedBitmap.getWidth(), croppedBitmap.getHeight());
                             final List<Classifier.Recognition> results = classifier.recognizeImage(croppedBitmap);
                             lastProcessingTimeMs = SystemClock.uptimeMillis() - startTime;
                             LOGGER.v("Detect: %s", results);
