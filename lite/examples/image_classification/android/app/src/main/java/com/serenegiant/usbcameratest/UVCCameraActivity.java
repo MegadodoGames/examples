@@ -221,6 +221,11 @@ public abstract class UVCCameraActivity extends AppCompatActivity
             return;
         }
         
+        int scaledWidth = 80;
+        int scaledHeight = 60;
+        bitmap = bitmap.createScaledBitmap(bitmap, scaledWidth, scaledHeight, false);
+        
+        
         rgbBitmap = bitmap;
         
         try {
