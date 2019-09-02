@@ -95,7 +95,7 @@ public class UVCClassifierActivity extends UVCCameraActivity implements OnImageA
                         previewHeight,
                         classifier.getImageSizeX(),
                         classifier.getImageSizeY(),
-                        sensorOrientation,
+                        0,
                         MAINTAIN_ASPECT);
         
         cropToFrameTransform = new Matrix();

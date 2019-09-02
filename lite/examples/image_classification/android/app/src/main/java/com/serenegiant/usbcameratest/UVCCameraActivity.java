@@ -235,7 +235,7 @@ public abstract class UVCCameraActivity extends AppCompatActivity
                 //previewHeight = previewSize.height;
                 //previewWidth = previewSize.width;
                 rgbBytes = new int[previewWidth * previewHeight];
-                onPreviewSizeChosen(new Size(previewWidth, previewHeight), 90);
+                onPreviewSizeChosen(new Size(previewWidth, previewHeight), 0);
             }
         } catch (final Exception e) {
             LOGGER.e(e, "Exception!");
