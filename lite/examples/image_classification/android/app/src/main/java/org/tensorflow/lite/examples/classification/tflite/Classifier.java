@@ -94,12 +94,13 @@ public abstract class Classifier {
    */
   public static Classifier create(Activity activity, Model model, Device device, int numThreads)
       throws IOException {
-      return new RegressorFloatFaceFlow(activity, device, numThreads);
-//    if (model == Model.QUANTIZED) {
+    if (model == Model.QUANTIZED) {
+      return new RegressorQuantizedFaceFlow(activity, device, numThreads);
 //      return new ClassifierQuantizedMobileNet(activity, device, numThreads);
-//    } else {
+    } else {
+      return new RegressorFloatFaceFlow(activity, device, numThreads);
 //      return new ClassifierFloatMobileNet(activity, device, numThreads);
-//    }
+    }
   }
 
   /** An immutable result returned by a Classifier describing what was recognized. */
